@@ -26,8 +26,27 @@ def vaja3(lat,lon):
     mintemp=min_temp[0]
     datum_naj=datum[0]
     datum_min=datum[0]
+def trenutna_temp2(lat, lon):
+    base_url = "https://api.open-meteo.com/v1/forecast"
+    params={"latitude": lat,
+            "longitude" : lon,
+            "current": "temperature_2m",
+            "timezone" : "auto",
+            "forecast_days" : 1
+            }
+    call= requests.get(base_url, params=params)
 
-    for i in range(len(datumi)):
-        if max_temp[i]> najtemp:
-            najtemp=i
+    json= call.json()
+    return json["current"]["temperature_2m"]
+
+cities = [
+    ("Ljubljana", 46.0511, 14.5051 ),
+    ("Maribor", 46.5558, 15.6459),
+    ("Celje", 46.2309, 15.2604),
+    ("Kranj", 46.2389, 14.3556),
+]
+
+for c in cities[:4]:
+    print(trenutna_temp2(c[1], c[2]), c[0])
+
         
